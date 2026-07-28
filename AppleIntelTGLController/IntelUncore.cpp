@@ -240,7 +240,7 @@ void IntelUncore::postingRead32(u32 offset)
 }
 
 
- * Register Access with Forcewake
+ //* Register Access with Forcewake
 
 u32 IntelUncore::readRegister32_fw(u32 offset)
 {
