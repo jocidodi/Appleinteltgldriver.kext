@@ -10,7 +10,7 @@
 #include <IOKit/IOLib.h>
 
 
- * Initialization
+ //* Initialization
 
 bool IntelUncore::init(AppleIntelTGLController *ctrl, void *base, size_t size)
 {
@@ -112,7 +112,7 @@ void IntelUncore::cleanup()
 }
 
 
- * Low-level MMIO Access (inline for performance)
+// * Low-level MMIO Access (inline for performance)
 
 inline u8 IntelUncore::rawRead8(u32 offset)
 {
