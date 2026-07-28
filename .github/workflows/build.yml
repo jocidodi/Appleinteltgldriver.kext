@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-13  # Intel-alapú macOS runner használata (x86_64 kext-ekhez stabilabb)
+    runs-on: macos-14
 
     steps:
       - name: Checkout repository
@@ -20,12 +20,12 @@ jobs:
         run: |
           xcodebuild -project AppleIntelTGLController.xcodeproj \
             -configuration Release \
+            ARCHS=x86_64 \
             BUILD_DIR=build \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
-            GCC_WARN_INHIBIT_ALL_WARNINGS=YES \
-            COMPILER_INDEX_STORE_ENABLE=NO
+            GCC_WARN_INHIBIT_ALL_WARNINGS=YES
 
       - name: Compress Built Kext
         run: |
