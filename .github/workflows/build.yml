@@ -1,0 +1,32 @@
+name: Build Kext
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Select Xcode version
+        run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+
+      - name: Build Kext
+        run: |
+          xcodebuild -project AppleIntelTGLController.xcodeproj -configuration Release BUILD_DIR=build
+
+      - name: Compress Built Kext
+        run: |
+          cd build/Release
+          zip -r AppleintelTGLdriver.kext.zip *.kext
+
+      - name: Upload Kext Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AppleintelTGLdriver-Kext
+          path: build/Release/AppleintelTGLdriver.kext.zip
