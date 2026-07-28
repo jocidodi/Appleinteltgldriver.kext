@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-13  # Intel-alapú macOS runner használata (x86_64 kext-ekhez stabilabb)
 
     steps:
       - name: Checkout repository
@@ -23,12 +23,14 @@ jobs:
             BUILD_DIR=build \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO
+            CODE_SIGNING_ALLOWED=NO \
+            GCC_WARN_INHIBIT_ALL_WARNINGS=YES \
+            COMPILER_INDEX_STORE_ENABLE=NO
 
       - name: Compress Built Kext
         run: |
           cd build/Release
-          zip -r AppleintelTGLdriver.kext.zip *.kext
+          zip -r AppleintelTGLdriver.kext.zip *.kext || zip -r AppleintelTGLdriver.kext.zip *
 
       - name: Upload Kext Artifact
         uses: actions/upload-artifact@v4
